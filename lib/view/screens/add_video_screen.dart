@@ -12,7 +12,7 @@ class AddVideoScreen extends StatelessWidget {
 
   pickVideo(ImageSource src, BuildContext context) async {
     final video = await ImagePicker().pickVideo(source: src);
-    Get.snackbar('Notification', 'you have picked a video');
+
     // get video from anywhere when you call
     if (video != null) {
       Navigator.of(context).push(MaterialPageRoute(
@@ -20,6 +20,7 @@ class AddVideoScreen extends StatelessWidget {
                 videoFile: File(video.path),
                 videoPath: video.path,
               )));
+      Get.snackbar('Notification', 'you have picked a video');
     }
   }
 

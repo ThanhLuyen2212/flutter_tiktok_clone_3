@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Align(
                 alignment: Alignment.bottomCenter, child: Icon(Icons.home)),
-            label: 'home',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
               icon: Icon(
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Icons.person,
                 size: 30,
               ),
-              label: 'profile'),
+              label: 'Profile'),
         ],
       ),
       body: pages[pageIdx],

@@ -3,7 +3,7 @@ import 'package:flutter_tiktok_clone_3/controller/auth_controller.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
-  Rx<Map<String, dynamic>> _user = Rx<Map<String, dynamic>>({});
+  final Rx<Map<String, dynamic>> _user = Rx<Map<String, dynamic>>({});
   Map<String, dynamic> get user => _user.value;
 
   Rx<String> _uid = ''.obs;
@@ -25,7 +25,7 @@ class ProfileController extends GetxController {
       thumbnails.add((myVideos.docs[i].data() as dynamic)['thumbnail']);
     }
 
-    //get imformation of yourself or people your searched
+    //get imformation of yourself or people you searched
     DocumentSnapshot userDoc = await FirebaseFirestore.instance
         .collection('users')
         .doc(_uid.value)

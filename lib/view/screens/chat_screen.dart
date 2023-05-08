@@ -112,20 +112,20 @@ class _ChatScreenState extends State<ChatScreen> {
       children: [
         Flexible(
             child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24),
+              topLeft: const Radius.circular(24),
               bottomRight: sendByMe ? Radius.circular(0) : Radius.circular(24),
-              topRight: Radius.circular(24),
+              topRight: const Radius.circular(24),
               bottomLeft: sendByMe ? Radius.circular(24) : Radius.circular(0),
             ),
             color: sendByMe ? Colors.blue : Color(0xfff1f0f0),
           ),
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Text(
             message,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ))
       ],
@@ -145,7 +145,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   return chatMessageTitle(
                       ds['message'], _myInfo!.name == ds['sendBy']);
                 })
-            : Center(
+            : const Center(
                 child: CircularProgressIndicator(),
               );
       },

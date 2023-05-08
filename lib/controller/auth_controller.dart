@@ -111,7 +111,7 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       Get.snackbar(
-        'Error Loggin gin',
+        'Error Login',
         e.toString(),
       );
     }
