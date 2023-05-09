@@ -2,6 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tiktok_clone_3/controller/auth_controller.dart';
 import 'package:flutter_tiktok_clone_3/controller/profile_controller.dart';
+import 'package:flutter_tiktok_clone_3/model/message.dart';
+import 'package:flutter_tiktok_clone_3/view/screens/chat_screen.dart';
+import 'package:flutter_tiktok_clone_3/view/screens/message_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -15,11 +18,19 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final ProfileController profileController = Get.put(ProfileController());
+
+  bool block = false;
+  bool show = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     profileController.updateUserId(widget.uid);
+    if (widget.uid != AuthController.instance.user.uid) {
+      block = profileController.checkBlock(widget.uid);
+      show = true;
+    }
   }
 
   @override
@@ -175,6 +186,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     )),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Visibility(
+                    visible: show,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          child: Text(
+                            block ? 'Blocked' : 'Block',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              block = !block;
+                              profileController.BlockUser(widget.uid);
+                            });
+                          },
+                        ),
+                        Visibility(
+                          visible: !block,
+                          child: Container(
+                            width: 140,
+                            height: 47,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black12),
+                            ),
+                            child: Center(
+                                child: InkWell(
+                              onTap: (() {
+                                if (widget.uid !=
+                                    AuthController.instance.user.uid) {
+                                  Get.to(
+                                      () => ChatScreen(chatWithId: widget.uid));
+                                }
+                              }),
+                              child: Icon(
+                                (widget.uid != AuthController.instance.user.uid)
+                                    ? Icons.message
+                                    : null,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                            )),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 25,

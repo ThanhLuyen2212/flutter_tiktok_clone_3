@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tiktok_clone_3/constants.dart';
 import 'package:flutter_tiktok_clone_3/controller/auth_controller.dart';
 import 'package:flutter_tiktok_clone_3/view/screens/auth/login_screen.dart';
-import 'package:flutter_tiktok_clone_3/view/screens/home_screen.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

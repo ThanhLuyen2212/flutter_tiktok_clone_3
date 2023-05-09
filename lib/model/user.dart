@@ -5,13 +5,14 @@ class myUser {
   String profilePhoto;
   String email;
   String uid;
+  List? block;
 
-  myUser({
-    required this.name,
-    required this.profilePhoto,
-    required this.email,
-    required this.uid,
-  });
+  myUser(
+      {required this.name,
+      required this.profilePhoto,
+      required this.email,
+      required this.uid,
+      this.block});
 
   // app - firebase (Map)
   Map<String, dynamic> toJson() => {
@@ -19,6 +20,7 @@ class myUser {
         'profilePic': profilePhoto,
         'email': email,
         'uid': uid,
+        'block': block
       };
 
   //fire base - app(User)
@@ -28,6 +30,7 @@ class myUser {
         name: snapshot['name'],
         profilePhoto: snapshot['profilePic'],
         email: snapshot['email'],
-        uid: snapshot['uid']);
+        uid: snapshot['uid'],
+        block: snapshot['block']);
   }
 }

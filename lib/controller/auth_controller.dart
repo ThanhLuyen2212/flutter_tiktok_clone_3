@@ -74,11 +74,11 @@ class AuthController extends GetxController {
         );
         String downloadUrl = await _uploadToStorage(image);
         model.myUser user = model.myUser(
-          name: username,
-          email: email,
-          uid: cred.user!.uid,
-          profilePhoto: downloadUrl,
-        );
+            name: username,
+            email: email,
+            uid: cred.user!.uid,
+            profilePhoto: downloadUrl,
+            block: []);
         await FirebaseFirestore.instance
             .collection('users')
             .doc(cred.user!.uid)

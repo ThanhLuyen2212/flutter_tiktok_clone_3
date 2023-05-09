@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tiktok_clone_3/controller/auth_controller.dart';
 import 'package:flutter_tiktok_clone_3/controller/video_controller.dart';
+import 'package:flutter_tiktok_clone_3/model/video.dart';
 import 'package:flutter_tiktok_clone_3/view/screens/comment_screen.dart';
 import 'package:flutter_tiktok_clone_3/view/widget/circle_animation.dart';
 import 'package:flutter_tiktok_clone_3/view/widget/video_player_item.dart';
 import 'package:get/get.dart';
 
 class VideoScreen extends StatelessWidget {
-  VideoScreen({super.key});
+  Video? videosearch;
+  VideoScreen({super.key, this.videosearch});
 
   final VideoController videoController = Get.put(VideoController());
+
+  void onInit() {
+    if (videosearch != null) {
+      videoController.videoList.remove(videosearch);
+      videoController.videoList.insert(0, videosearch!);
+    }
+  }
 
   buildProfile(String profilePhoto) {
     return SizedBox(
@@ -69,6 +78,9 @@ class VideoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    if (videosearch != null) {
+      onInit();
+    }
 
     return Scaffold(
       body: Obx(() {

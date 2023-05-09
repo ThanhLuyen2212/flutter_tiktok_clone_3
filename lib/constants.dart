@@ -20,17 +20,10 @@ const borderColor = Colors.grey;
 
 // page
 List pages = [
-  //VideoScreen(),
-  //Text('Video_screen'),
-
-  //Text('Search Screen'),
   VideoScreen(),
   SearchScreen(),
   const AddVideoScreen(),
-  //Text('addvideo screen'),
-  //Text('Message Screen'),
   MessageScreen(),
-  //Text('Profile Screen'),
   ProfileScreen(
     uid: AuthController.instance.user.uid,
   ),

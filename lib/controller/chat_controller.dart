@@ -1,15 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_tiktok_clone_3/controller/auth_controller.dart';
 import 'package:flutter_tiktok_clone_3/model/message.dart';
 import 'package:flutter_tiktok_clone_3/model/user.dart';
 import 'package:get/get.dart';
-import 'package:random_string/random_string.dart';
 
 class ChatController extends GetxController {
 // lấy tin nhắn
 
-  String _chatWithId = '';
-  var _chatroomid; // chatroomid is a uid of users message with you
+  // String _chatWithId = '';
+  // var _chatroomid; // chatroomid is a uid of users message with you
   // lấy thông tin người nhắn tin
   Rx<Map<String, dynamic>> _user = Rx<Map<String, dynamic>>({});
   Map<String, dynamic> get user => _user.value;

@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_tiktok_clone_3/controller/auth_controller.dart';
 import 'package:get/get.dart';
 
@@ -130,5 +133,35 @@ class ProfileController extends GetxController {
 
     _user.value.update('isfollowing', (value) => !value);
     update();
+  }
+
+  List<String> listUserBlocked = [];
+  listBlock(String id) async {
+    DocumentSnapshot doc = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthController.instance.user.uid)
+        .get();
+    listUserBlocked = (doc.data() as dynamic)['block'];
+  }
+
+  bool checkBlock(String id) {
+    return listUserBlocked.contains(id);
+  }
+
+  BlockUser(String id) async {
+    var uid = AuthController.instance.user.uid;
+
+    DocumentSnapshot doc =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+    if (((doc.data()! as dynamic)['block'] as List).contains(id)) {
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'block': FieldValue.arrayRemove([id])
+      });
+    } else {
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'block': FieldValue.arrayUnion([id])
+      });
+    }
   }
 }
