@@ -40,4 +40,17 @@ class MessageController extends GetxController {
       }));
     }
   }
+
+  List<String> listUserBlocked = [];
+  listBlock(String id) async {
+    DocumentSnapshot doc = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthController.instance.user.uid)
+        .get();
+    listUserBlocked = (doc.data() as dynamic)['block'];
+  }
+
+  bool checkBlock(String id) {
+    return listUserBlocked.contains(id);
+  }
 }
