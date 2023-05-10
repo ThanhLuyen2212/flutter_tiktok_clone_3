@@ -41,16 +41,32 @@ class MessageController extends GetxController {
     }
   }
 
-  List<String> listUserBlocked = [];
-  listBlock(String id) async {
-    DocumentSnapshot doc = await FirebaseFirestore.instance
-        .collection("users")
+  Future<bool> checkBlock(String chatWithId) async {
+    List<String> listUserBlocked = [];
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('users')
         .doc(AuthController.instance.user.uid)
         .get();
-    listUserBlocked = (doc.data() as dynamic)['block'];
+
+    myUser user = myUser.fromSnap(userDoc);
+    for (var item in user.block!) {
+      listUserBlocked.add(item.toString());
+    }
+    return Future.value(listUserBlocked.contains(chatWithId));
   }
 
-  bool checkBlock(String id) {
-    return listUserBlocked.contains(id);
+  Future<bool> checkBlock1(String chatWithId) async {
+    List<String> listUserBlocked1 = [];
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(chatWithId)
+        .get();
+
+    myUser user = myUser.fromSnap(userDoc);
+    for (var item in user.block!) {
+      listUserBlocked1.add(item.toString());
+    }
+    return Future.value(
+        listUserBlocked1.contains(AuthController.instance.user.uid));
   }
 }

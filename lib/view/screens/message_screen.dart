@@ -1,11 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tiktok_clone_3/controller/auth_controller.dart';
 import 'package:flutter_tiktok_clone_3/controller/message_controller.dart';
-import 'package:flutter_tiktok_clone_3/controller/search_controller.dart';
 import 'package:flutter_tiktok_clone_3/model/user.dart';
 import 'package:flutter_tiktok_clone_3/view/screens/chat_screen.dart';
-import 'package:flutter_tiktok_clone_3/view/screens/profile_screen.dart';
 import 'package:get/get.dart';
 
 class MessageScreen extends StatelessWidget {
@@ -13,6 +9,11 @@ class MessageScreen extends StatelessWidget {
   MessageScreen({super.key, this.uid});
 
   final MessageController messageController = Get.put(MessageController());
+
+  bool canChat = true;
+  init(String chatWithId) async {
+    canChat = await messageController.checkBlock(chatWithId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +37,22 @@ class MessageScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               myUser user = messageController.listUsers[index];
               return InkWell(
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ChatScreen(
-                          chatWithId: user.uid,
-                        ))),
+                onTap: (() async {
+                  if (await messageController.checkBlock(user.uid)) {
+                    Get.snackbar('Notification',
+                        'You cant chat with this guy because you blocked this guy');
+                  } else {
+                    if (await messageController.checkBlock1(user.uid)) {
+                      Get.snackbar('Notification',
+                          'You cant chat with this guy because you have been blocked by this guy');
+                    } else {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ChatScreen(
+                                chatWithId: user.uid,
+                              )));
+                    }
+                  }
+                }),
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(user.profilePhoto),

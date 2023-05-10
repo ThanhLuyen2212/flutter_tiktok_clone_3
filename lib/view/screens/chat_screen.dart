@@ -120,7 +120,7 @@ class _ChatScreenState extends State<ChatScreen> {
               topRight: const Radius.circular(24),
               bottomLeft: sendByMe ? Radius.circular(24) : Radius.circular(0),
             ),
-            color: sendByMe ? Colors.blue : Color(0xfff1f0f0),
+            color: sendByMe ? Colors.blue : Colors.white24,
           ),
           padding: const EdgeInsets.all(16),
           child: Text(

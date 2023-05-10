@@ -1,8 +1,7 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tiktok_clone_3/controller/auth_controller.dart';
+import 'package:flutter_tiktok_clone_3/model/user.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
@@ -135,17 +134,32 @@ class ProfileController extends GetxController {
     update();
   }
 
+  // Future<bool> listBlock(String id) async {
+  //   List<String> listUserBlocked = [];
+  //   await FirebaseFirestore.instance
+  //       .collection("users")
+  //       .doc(AuthController.instance.user.uid)
+  //       .get()
+  //       .then((DocumentSnapshot snapshot) async {
+  //     for (var item in ((snapshot.data() as dynamic)['block'])) {
+  //       listUserBlocked.add(await item);
+  //     }
+  //   });
+  //   return listUserBlocked.contains(id);
+  // }
+
   List<String> listUserBlocked = [];
-  listBlock(String id) async {
-    DocumentSnapshot doc = await FirebaseFirestore.instance
-        .collection("users")
+  listBlock() async {
+    listUserBlocked = [];
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('users')
         .doc(AuthController.instance.user.uid)
         .get();
-    listUserBlocked = (doc.data() as dynamic)['block'];
-  }
 
-  bool checkBlock(String id) {
-    return listUserBlocked.contains(id);
+    myUser user = myUser.fromSnap(userDoc);
+    for (var item in user.block!) {
+      listUserBlocked.add(item.toString());
+    }
   }
 
   BlockUser(String id) async {
@@ -163,5 +177,20 @@ class ProfileController extends GetxController {
         'block': FieldValue.arrayUnion([id])
       });
     }
+  }
+
+  Future<bool> checkBlock1(String chatWithId) async {
+    List<String> listUserBlocked1 = [];
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(chatWithId)
+        .get();
+
+    myUser user = myUser.fromSnap(userDoc);
+    for (var item in user.block!) {
+      listUserBlocked1.add(item.toString());
+    }
+    return Future.value(
+        listUserBlocked1.contains(AuthController.instance.user.uid));
   }
 }

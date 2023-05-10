@@ -2,9 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tiktok_clone_3/controller/auth_controller.dart';
 import 'package:flutter_tiktok_clone_3/controller/profile_controller.dart';
-import 'package:flutter_tiktok_clone_3/model/message.dart';
 import 'package:flutter_tiktok_clone_3/view/screens/chat_screen.dart';
-import 'package:flutter_tiktok_clone_3/view/screens/message_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -27,14 +25,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // TODO: implement initState
     super.initState();
     profileController.updateUserId(widget.uid);
+  }
+
+  checkBlock() async {
     if (widget.uid != AuthController.instance.user.uid) {
-      block = profileController.checkBlock(widget.uid);
+      await profileController.listBlock();
+      block = profileController.listUserBlocked.contains(widget.uid);
       show = true;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    checkBlock();
     return GetBuilder<ProfileController>(
         init: ProfileController(),
         builder: (controller) {
@@ -218,8 +221,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             child: Center(
                                 child: InkWell(
-                              onTap: (() {
-                                if (widget.uid !=
+                              onTap: (() async {
+                                if (await profileController
+                                    .checkBlock1(widget.uid)) {
+                                  Get.snackbar('Notification',
+                                      'You cant chat with this guy because you have been blocked by this guy');
+                                } else if (widget.uid !=
                                     AuthController.instance.user.uid) {
                                   Get.to(
                                       () => ChatScreen(chatWithId: widget.uid));
