@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tiktok_clone_3/controller/search_controller.dart';
+import 'package:flutter_tiktok_clone_3/controller/search_controller.dart'
+    as Search;
 import 'package:flutter_tiktok_clone_3/model/user.dart';
 import 'package:flutter_tiktok_clone_3/model/video.dart';
 import 'package:flutter_tiktok_clone_3/view/screens/profile_screen.dart';
@@ -8,8 +9,8 @@ import 'package:get/get.dart';
 
 class SearchScreen extends StatelessWidget {
   SearchScreen({super.key});
-
-  final SearchController searchController = Get.put(SearchController());
+  final Search.SearchController searchController =
+      Get.put(Search.SearchController());
 
   @override
   Widget build(BuildContext context) {

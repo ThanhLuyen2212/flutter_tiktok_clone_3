@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tiktok_clone_3/constants.dart';
 import 'package:flutter_tiktok_clone_3/view/screens/confirm_video_screen.dart';

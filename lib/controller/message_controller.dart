@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_tiktok_clone_3/controller/auth_controller.dart';
 import 'package:flutter_tiktok_clone_3/model/user.dart';
 import 'package:get/get.dart';
-import 'package:timeago/timeago.dart';
 
 class MessageController extends GetxController {
   final Rx<List<myUser>> _listUsers = Rx<List<myUser>>([]);
